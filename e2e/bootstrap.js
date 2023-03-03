@@ -16,19 +16,15 @@ async function bootstrap(options = {}) {
   await appPage.goto(appUrl, { waitUntil: "load" });
 
   const targets = await browser.targets();
-
   const extensionTarget = targets.find(
     (target) => target.type() === "background_page"
   );
   //background_page is selected from targets
-
   const partialExtensionUrl = extensionTarget.url() || "";
-
   const [, , extensionId] = partialExtensionUrl.split("/");
 
   const extPage = await browser.newPage();
   const extensionUrl = `chrome-extension://${extensionId}/popup.html#/register`;
-
   await extPage.goto(extensionUrl, { waitUntil: "load" });
 
   return {
